@@ -18,6 +18,10 @@ class Artist
     @@all
   end
   
+  def initialize(name)
+    self.name = name
+  end
+  
   def songs
     Song.all.select do |song|
       song.artist == self
@@ -47,6 +51,16 @@ class Artist
   
   def print_songs
     self.songs.each {|song| puts song.name}
+  end
+
+  def self.find_or_create_by_name(name)
+    self.all.detect do |artist|
+      if artist.name == nil
+        artist.name = Artist.new(name)
+      else
+        artist.name
+      end
+    end
   end
 
 end
